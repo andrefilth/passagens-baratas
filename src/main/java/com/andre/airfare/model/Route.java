@@ -10,14 +10,19 @@ public class Route {
 
     private final List<String> routes;
 
+    public Route(List<String> routes) {
+        this.routes = routes;
+    }
 
-    public Route(String nomeArquivo) {
-        this.routes = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/"+nomeArquivo))).lines().collect(Collectors.toList());
+    public Route(String archive) {
+        this.routes = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/"+archive))).lines().collect(Collectors.toList());
     }
 
     public List<String> getRoutes() {
         return routes;
     }
+
+
 
     public Optional<String> bestRoute(String origin, String destiny){
         return this.routes.stream()
@@ -26,17 +31,6 @@ public class Route {
                 .min((p1, p2) -> Integer.compare(somenteDigitos(p1), somenteDigitos(p2)))
                 ;
     }
-
-   /* public Optional<String> bestRoute(String route) {
-        List<Integer> integer = this.routes.stream()
-                .filter(s -> s.contains(route))
-                .flatMap(this::somenteDigitos)
-                //.sorted(Compa)
-                .collect(Collectors.toList());
-
-        System.out.println("Numeros " + integer);
-        return null;
-    }*/
 
     private int somenteDigitos(String palavra) {
         String digitos = "";
