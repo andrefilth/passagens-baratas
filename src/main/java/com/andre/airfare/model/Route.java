@@ -1,4 +1,4 @@
-package com.andre.teste;
+package com.andre.airfare.model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
