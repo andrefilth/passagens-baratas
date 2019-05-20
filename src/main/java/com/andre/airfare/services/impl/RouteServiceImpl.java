@@ -30,6 +30,23 @@ public class RouteServiceImpl implements RouteService {
                 .flatMap(repository::save);
     }
 
+    @Override
+    public Mono<String> findBestRoute(String origin, String destiny) {
+        return validateFields(origin, destiny)
+                .then(repository.find(origin, destiny));
+                //.flatMap(repository.find);
+    }
+
+
+
+    private Mono<Void> validateFields(String origin, String destiny) {
+        notEmpty(origin, "Origem");
+        notEmpty(destiny, "Destino");
+        LOG.info("Campos das rotas validados com sucesso");
+        return Mono.empty();
+    }
+
+
     private Mono<Route> validateFields(Route route) {
         notEmpty(route.getRoutes(), "Lista de rotas");
         LOG.info("Campos das rotas validados com sucesso. body: [{}]", route);

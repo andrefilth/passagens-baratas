@@ -4,5 +4,8 @@ import com.andre.airfare.model.Route;
 import reactor.core.publisher.Mono;
 
 public interface RouteRepository {
+
     Mono<Route> save(Route route);
+
+    Mono<String> find(String origin, String destiny);
 }

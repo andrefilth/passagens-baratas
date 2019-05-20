@@ -1,21 +1,29 @@
 package com.andre.airfare.model;
 
+import com.andre.airfare.endpoint.request.RouteRequest;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 public class Route {
 
-    private final List<String> routes;
+    private List<String> routes;
+    private String origin;
+    private String destiny;
 
-    public Route(List<String> routes) {
-        this.routes = routes;
+    public Route() {
     }
 
     public Route(String archive) {
         this.routes = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/"+archive))).lines().collect(Collectors.toList());
+        this.destiny = null;
+        this.origin = null;
     }
 
     public List<String> getRoutes() {
@@ -23,6 +31,25 @@ public class Route {
     }
 
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getDestiny() {
+        return destiny;
+    }
+
+    public void setRoutes(List<String> routes) {
+        this.routes = routes;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public void setDestiny(String destiny) {
+        this.destiny = destiny;
+    }
 
     public Optional<String> bestRoute(String origin, String destiny){
         return this.routes.stream()
@@ -42,5 +69,14 @@ public class Route {
         }
         return Integer.parseInt(digitos);
 
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, JSON_STYLE)
+                .append("routes", routes)
+                .append("origin", origin)
+                .append("destiny", destiny)
+                .build();
     }
 }

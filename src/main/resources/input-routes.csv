@@ -4,3 +4,5 @@ GRU - ORL - RMS - CGD - 44
 GRU - CDG - 75
 GRU - SCL - ORL - CDG - 48
 GRU - BRC - CDG - 45
+GRU - BRC - SCL - 100
+GRU - ORL - 15

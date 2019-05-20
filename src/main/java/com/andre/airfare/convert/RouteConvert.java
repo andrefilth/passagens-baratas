@@ -11,6 +11,10 @@ public class RouteConvert {
     private static final Logger LOG = LoggerFactory.getLogger(RouteConvert.class);
 
     public static Route toModel(RouteRequest request) {
-    return new Route(request.getRouters());
+        Route route = new Route();
+        route.setDestiny(request.getDestiny());
+        route.setOrigin(request.getOrigin());
+        route.setRoutes(request.getRoutes());
+    return route;
     }
 }

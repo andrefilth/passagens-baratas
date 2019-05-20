@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import static com.andre.airfare.constants.Constants.AIRFARE_CONTEXT_PATH;
+import static com.andre.airfare.convert.RouteConvert.*;
 
 @RestController
 @RequestMapping(AIRFARE_CONTEXT_PATH)
@@ -28,12 +29,22 @@ public class RouteEndpoint {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/routes")
-    public Mono<RouteResponse> createWallet(@RequestBody RouteRequest request) {
+    public Mono<RouteResponse> create(@RequestBody RouteRequest request) {
 
         LOG.info("Solicitação de criação de novas rotas [{}]", request);
 
-        return service.create(RouteConvert.toModel(request))
+        return service.create(toModel(request))
                       .map(RouteResponse::new)
                       .doOnSuccess(wr -> LOG.info("Resposta de criação das rotas [{}]", wr));
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping("/routes")
+    public Mono<String> get(@RequestParam(value = "origin") String origin,@RequestParam(value = "destiny") String destiny ) {
+
+        LOG.info("Buscando a melhor rota DE [{}], PARA [{}]", origin, destiny);
+
+        return service.findBestRoute(origin, destiny)
+                .doOnSuccess(wr -> LOG.info("Melhor rota [{}]", wr));
     }
 }

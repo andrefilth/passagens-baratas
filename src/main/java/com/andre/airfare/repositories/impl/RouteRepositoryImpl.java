@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RouteRepositoryImpl implements RouteRepository {
@@ -19,9 +20,18 @@ public class RouteRepositoryImpl implements RouteRepository {
         return verify(route.getRoutes());
     }
 
+    @Override
+    public Mono<String> find(String origin, String destiny) {
+        Route newRouter = new Route("input-routes.csv");
+        return Mono.justOrEmpty(newRouter.bestRoute(origin, destiny));
+    }
+
     public Mono<Route> verify(List<String> routes)  {
 
-        File file = new File("E:\\arquivo");
+        String pasta = System.getProperty("user.home");
+        String arquivo = "/git/git/passagens-baratas/src/main/resources/input-routes.csv";
+        File file = new File(pasta+arquivo);
+
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(file, true));
@@ -33,8 +43,9 @@ public class RouteRepositoryImpl implements RouteRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return Mono.just(new Route(routes));
+        Route route = new Route();
+        route.setRoutes(routes);
+        return Mono.just(route);
 
     }
 }

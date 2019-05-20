@@ -10,8 +10,10 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 public class RouteRequest {
 
     private List<String> routes;
+    private String origin;
+    private String destiny;
 
-    public List<String> getRouters() {
+    public List<String> getRoutes() {
         return routes;
     }
 
@@ -19,10 +21,28 @@ public class RouteRequest {
         this.routes = routes;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getDestiny() {
+        return destiny;
+    }
+
+    public void setDestiny(String destiny) {
+        this.destiny = destiny;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, JSON_STYLE)
                 .append("routes", routes)
+                .append("origin", origin)
+                .append("destiny", destiny)
                 .build();
     }
 }
